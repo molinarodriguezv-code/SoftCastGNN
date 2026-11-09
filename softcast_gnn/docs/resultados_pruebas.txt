@@ -1,0 +1,105 @@
+EVIDENCIAS DE PRUEBAS · SoftCast (ponderación 30 % tráfico / 70 % latencia, configuración aleatoria por sesión)
+=====================================================================================================
+
+1. Pruebas automatizadas (python -m pytest -v)
+----------------------------------------------
+tests/test_app.py::test_app_carga_las_seis_pestanas_con_dos_bloqueados PASSED
+tests/test_app.py::test_nueva_sesion_genera_otra_configuracion PASSED
+tests/test_app.py::test_interacciones_conservan_la_configuracion PASSED
+tests/test_app.py::test_boton_iniciar_recorrido_muestra_latencia_en_ms PASSED
+tests/test_app.py::test_validacion_origen_bloqueado PASSED
+tests/test_app.py::test_validacion_origen_igual_al_destino PASSED
+tests/test_app.py::test_nueva_configuracion_aleatoria_cambia_la_semilla PASSED
+tests/test_automata.py::test_estado_final[-Normal] PASSED
+tests/test_automata.py::test_estado_final[OK OK OK-Normal] PASSED
+tests/test_automata.py::test_estado_final[OK ERR-An\xf3malo] PASSED
+tests/test_automata.py::test_estado_final[OK ERR OK-Normal] PASSED
+tests/test_automata.py::test_estado_final[ERR OK ERR OK-Normal] PASSED
+tests/test_automata.py::test_estado_final[OK ERR ERR-Bloqueado] PASSED
+tests/test_automata.py::test_estado_final[ERR ERR OK OK-Bloqueado] PASSED
+tests/test_automata.py::test_estado_final[ERR ERR HAB-Normal] PASSED
+tests/test_automata.py::test_estado_final[OK BLQ-Bloqueado] PASSED
+tests/test_automata.py::test_estado_final[OK BLQ OK ERR-Bloqueado] PASSED
+tests/test_automata.py::test_estado_final[OK BLQ HAB OK-Normal] PASSED
+tests/test_automata.py::test_estado_final[ERR HAB-An\xf3malo] PASSED
+tests/test_automata.py::test_estado_final[HAB HAB OK-Normal] PASSED
+tests/test_automata.py::test_estado_final[ERR BLQ HAB ERR-An\xf3malo] PASSED
+tests/test_automata.py::test_acepta_solo_si_termina_en_normal PASSED
+tests/test_automata.py::test_delta_total_y_tres_estados PASSED
+tests/test_automata.py::test_bloqueado_solo_sale_con_hab PASSED
+tests/test_automata.py::test_simbolo_fuera_del_alfabeto PASSED
+tests/test_automata.py::test_afd_es_minimo PASSED
+tests/test_automata.py::test_expresion_regular_equivale_al_afd PASSED
+tests/test_automata.py::test_generador_de_eventos PASSED
+tests/test_red_gnn.py::test_inventario_fijo PASSED
+tests/test_red_gnn.py::test_sin_enlaces_duplicados_ni_lazos PASSED
+tests/test_red_gnn.py::test_cada_equipo_tiene_tres_o_cuatro_enlaces PASSED
+tests/test_red_gnn.py::test_bloquear_cualquier_equipo_o_enlace_no_desconecta_la_red PASSED
+tests/test_red_gnn.py::test_aristas_con_trafico_latencia_y_peso PASSED
+tests/test_red_gnn.py::test_peso_penaliza_extremos_anomalos_y_se_actualiza PASSED
+tests/test_red_gnn.py::test_dijkstra_usa_el_peso_y_no_los_saltos PASSED
+tests/test_red_gnn.py::test_dijkstra_valida_origen_destino PASSED
+tests/test_red_gnn.py::test_misma_topologia_distinto_trafico PASSED
+tests/test_red_gnn.py::test_recorrido_bfs PASSED
+tests/test_red_gnn.py::test_bloqueo_de_servidor PASSED
+tests/test_red_gnn.py::test_ruta_optima_esquiva_bloqueados PASSED
+tests/test_red_gnn.py::test_gradiente_analitico_coincide_con_numerico PASSED
+tests/test_red_gnn.py::test_gnn_entrenada_encuentra_rutas_optimas PASSED
+tests/test_red_gnn.py::test_buscar_ruta_y_rendimiento PASSED
+tests/test_red_gnn.py::test_ponderacion_prioriza_la_latencia PASSED
+tests/test_red_gnn.py::test_configuracion_inicial_dos_bloqueados_distintos PASSED
+tests/test_red_gnn.py::test_red_de_sesion_exactamente_dos_bloqueados_y_red_activa_conectada PASSED
+tests/test_red_gnn.py::test_habilitar_un_equipo_bloqueado_al_inicio PASSED
+tests/test_red_gnn.py::test_rutas_excluyen_bloqueados_e_inactivos_y_dan_latencia_en_ms PASSED
+tests/test_red_gnn.py::test_equipo_anomalo_transitable_si_es_la_unica_alternativa PASSED
+tests/test_red_gnn.py::test_sin_ruta_disponible_se_informa PASSED
+============================= 50 passed in 15.03s ==============================
+
+2. Pruebas en el navegador (Chromium + Playwright sobre streamlit run app.py)
+---------------------------------------------------------------------------
+SESION A: Configuración aleatoria de esta sesión (semilla 5593). Equipos bloqueados: PT3 y IM2 🔒 · Enlaces interrumpidos: PC2–IM1 ✕ · Equipos anómalos: S1, PT1. Al refrescar la página (F5) o pulsar 🎲 se gene
+SESION B (F5): Configuración aleatoria de esta sesión (semilla 7434). Equipos bloqueados: PT3 y IoT2 🔒 · Enlaces interrumpidos: PT2–PT4, PC4–IoT1 ✕ · Equipos anómalos: PT4, IoT3, IoT4. Al refrescar la página (F5)
+SEMILLA 3: Configuración aleatoria de esta sesión (semilla 3). Equipos bloqueados: PC1 y IoT3 🔒 · Enlaces interrumpidos: PT1–IM1 ✕ · Equipos anómalos: IM1, IoT2. Al refrescar la página (F5) o pulsar 🎲 se gene
+ENTER → panel: Ruta PC2 → PT5: PC2 → IM1 → S1 → PC3 → PT5 · latencia total 11.70 ms · 4 saltos. Vea la animación en «Simulación».
+ANIM 1: Paso 1 de 4 · la información viaja de PC2 a IM1: latencia 3,86 ms (128,5 Mbps, peso 0,656) · latencia acumulada al llegar 3,86 ms
+ANIM 2: Paso 2 de 4 · la información viaja de IM1 a S1: latencia 2,12 ms (49,8 Mbps, peso 0,406) · latencia acumulada al llegar 5,98 ms
+PAUSA estable: True
+COMPLETO: ✔ Recorrido completo: PC2 → IM1 → S1 → PC3 → PT5 · latencia total 11,70 ms · tráfico total 205,0 Mbps · peso (costo del algoritmo) 1,385 · 4 saltos.
+TARJETA:  |   Resultado · GNN (red neuronal)  |  Origen PC2 → Destino PT5 |   PC2 Normal → IM1 Anómalo → S1 Normal → PC3 Normal → PT5 Normal |    |     Latencia total acumulada11.70 ms |     Tráfico total acumulado205.0 Mbps |     Peso (costo interno de Dijkstra)1.385 |          adimensional · no son ms |     Saltos4 |   ⚠ La ruta atraviesa IM1 (Anómalo): sigue siendo transitable y su penalización (+0,2 en cada uno de sus enlaces) ya está incluida en el peso; aun así es la mejor alternativa disponible. | 
+S1: ✔ Recorrido completo: PC2 → PT2 → PT4 → IoT4 → PT5 · latencia total 36,62 ms · tráfico total 179,7 Mbps · peso (costo del algoritmo) 2,094 · 4 saltos.
+SIN RUTA → panel: No existe un camino disponible entre PC2 y PT3 con los enlaces activos.
+ORIGEN BLOQUEADO → panel: El origen PC1 está Bloqueado (Aleatorio al iniciar) y no puede participar en el recorrido.
+
+3. Cálculo del peso (30 % tráfico, 70 % latencia)
+-------------------------------------------------
+peso = 0,30·T/140 Mbps + 0,70·L/15 ms + 0,2·(extremos Anómalos)
+Ejemplo IM1–S1 (semilla 3): T = 49,8 Mbps → 0,356; L = 2,12 ms → 0,141; IM1 Anómalo (A = 1)
+  0,30·0,356 + 0,70·0,141 + 0,2 = 0,406
+Comparación de criterios (9430 rutas de prueba):
+  Solo tráfico (α=1, β=0)                       latencia  26.03 ms · tráfico  180.1 Mbps · saltos 3.35
+  α=0,7 tráfico, β=0,3 latencia                 latencia  22.48 ms · tráfico  185.0 Mbps · saltos 3.16
+  α=0,3 tráfico, β=0,7 latencia (adoptada)      latencia  21.11 ms · tráfico  197.1 Mbps · saltos 3.21
+  Solo latencia (α=0, β=1)                      latencia  20.82 ms · tráfico  207.8 Mbps · saltos 3.27
+  Menos saltos                                  latencia  22.31 ms · tráfico  193.6 Mbps · saltos 3.06
+
+4. Dijkstra
+-----------
+Red de referencia (semilla 3): 240 de 240 pares coinciden con la búsqueda exhaustiva de todos los caminos simples.
+Ruta PC2 → PT5: PC2 → IM1 → S1 → PC3 → PT5 · latencia total 11,70 ms · tráfico 205,0 Mbps · peso 1,385 · atraviesa IM1 (Anómalo).
+Equipo anómalo como única alternativa: IoT2 → PT5 → PC5 → S2 (25.96 ms); GNN: IoT2 → PT5 → PC5 → S2.
+Sin ruta (S1–S2, S2–PC5 y PC4–IoT1 interrumpidos): No existe un camino disponible entre PC2 y PT3 con los enlaces activos.
+
+5. Configuración aleatoria (300 sesiones)
+-----------------------------------------
+Dos equipos bloqueados: 300 de 300 · ambos servidores: 0 · red activa conectada: 300 de 300
+Enlaces interrumpidos 1 / 2 / 3: 94 / 96 / 110
+Equipos anómalos por sesión: {'0': 58, '1': 113, '2': 78, '3': 32, '4': 15, '5': 3, '6': 1}
+
+6. GNN (misma ponderación que Dijkstra)
+---------------------------------------
+Conjunto de prueba (9430 pares de 45 escenarios): rutas óptimas 98.3 % · sobrecosto medio 0.018 % · máximo 4.8 %
+Media de 5 entrenamientos: 98.5 % · menos saltos: 81.2 % · solo latencia: 89.7 %
+
+7. Rendimiento (mediana de 30 repeticiones)
+-------------------------------------------
+Dijkstra 0.23 ms · GNN 1.3 ms · BFS + AFD 1.0 ms · simulación 1.9 ms
